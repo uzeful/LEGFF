@@ -11,4 +11,4 @@ This demo is implemented by Yu Zhang (uzeful@163.com).
 
 Usage:
 
-Main.m ----- Implementation of the local extreme map guided multi-modal brain image fusion.
+Main.m ----- Implementation of the local extreme map guided image fusion method.

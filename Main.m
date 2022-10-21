@@ -51,19 +51,19 @@ for ii = 1 : ImgNum
     end
 
     
-    % 
+    % transform color images from RGB color space to YCbCr color space if there exists color input image
     is_color = 0;
-    if size(img2,3) == 3 || size(img1,3) == 3
+    if size(img2,3) == 3
         is_color = 1;
-        LAB1 = rgb2ycbcr(img2);
+        LAB2 = rgb2ycbcr(img2);
 
         if size(img1,3) == 1
             img1 = cat(3, img1, img1, img1);
         end
-        LAB2 = rgb2ycbcr(img1);
+        LAB1 = rgb2ycbcr(img1);
 
-        img2 = LAB1(:,:,1);
-        img1 = LAB2(:,:,1);
+        img1 = LAB1(:,:,1);
+        img2 = LAB2(:,:,1);
     end
 
 
@@ -123,8 +123,8 @@ for ii = 1 : ImgNum
     end
     
     
-    % transform the fusion image back to the RGB color space
-	if is_color
+    % transform the fusion image from YCbYr color space back to RGB color space
+    if is_color
         LAB = LAB1;
         A1 = double(LAB1(:,:,2)); B1 = double(LAB1(:,:,3));
         A2 = double(LAB2(:,:,2)); B2 = double(LAB2(:,:,3));
@@ -140,9 +140,9 @@ for ii = 1 : ImgNum
         LAB(:,:,2) = uint8(FA);
         LAB(:,:,3) = uint8(FB);
         result = ycbcr2rgb(LAB);
-	else
+    else
         result = uint8(FBFeat + FDFeat + FBase);
-	end
+    end
 
     if is_store_res
         imwrite(uint8(result), fileName)
